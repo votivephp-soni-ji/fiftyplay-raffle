@@ -21,7 +21,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
         //Event Manage
-
-        Route::get('create-event', [EventController::class, 'create'])->name('create.event');
+        Route::prefix('event')->group(function () {
+            Route::get('/list', [EventController::class, 'index'])->name('event.index');
+            Route::get('/create', [EventController::class, 'create'])->name('event.create');
+            Route::post('/store', [EventController::class, 'store'])->name('event.store');
+        });
     });
 });

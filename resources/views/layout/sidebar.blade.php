@@ -53,7 +53,7 @@
                     <ul class="nav nav-sm flex-column">
 
                         <li class="nav-item">
-                            <a href="{{ route('create.event') }}" class="nav-link active">Create Event
+                            <a href="{{ route('event.create') }}" class="nav-link active">Create Event
                             </a>
                         </li>
 

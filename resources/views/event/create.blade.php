@@ -11,12 +11,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                        <h4 class="mb-sm-0">Form Layout</h4>
+                        <h4 class="mb-sm-0">Event Creation</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                                <li class="breadcrumb-item active">Form Layout</li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Event Management</a></li>
+                                <li class="breadcrumb-item active">Create Event</li>
                             </ol>
                         </div>
 
@@ -26,70 +26,119 @@
             <div class="row">
                 <div class="col">
 
-                    <form action="javascript:void(0);">
+                    <form action="{{ route('event.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="eventTitle" class="form-label">Event Title</label>
+                                    <input type="text" name="event_title" class="form-control" placeholder="Event Title"
+                                        id="eventTitle" value="{{ old('event_title') }}">
+                                    @error('event_title')
+                                        <small class="text-danger"> {{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="TicketPrice" class="form-label">Ticket Price</label>
+                                    <input type="text" name="ticket_price" class="form-control"
+                                        placeholder="Ticket Price" id="TicketPrice" value="{{ old('ticket_price') }}">
+                                    @error('ticket_price')
+                                        <small class="text-danger"> {{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="banner" class="form-label">Max Ticket Limit</label>
+                                    <input type="number" name="max_tickets_per_user" placeholder="Max ticket limit/user"
+                                        class="form-control" min="1" value="{{ old('max_tickets_per_user', 1) }}">
+                                    @error('max_tickets_per_user')
+                                        <small class="text-danger"> {{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="startDate" class="form-label">Start Date</label>
+                                    <input type="date" name="start_date" value="{{ old('end_date') }}"
+                                        class="form-control" placeholder="Start Date" id="startDate">
+                                    @error('start_date')
+                                        <small class="text-danger"> {{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="endDate" class="form-label">End Date</label>
+                                    <input type="date" name="end_date" value="{{ old('end_date') }}" class="form-control"
+                                        placeholder="End Date" id="endDate">
+                                    @error('end_date')
+                                        <small class="text-danger"> {{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="drawTime" class="form-label">Draw Time</label>
+                                    <input type="date" name="draw_time" value="{{ old('draw_time') }}"
+                                        class="form-control" placeholder="Draw Time" id="drawTime">
+                                    @error('draw_time')
+                                        <small class="text-danger"> {{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="col-6">
                                 <div class="mb-3">
-                                    <label for="firstNameinput" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter your firstname"
-                                        id="firstNameinput">
+                                    <label for="banner" class="form-label">Event Banner</label>
+                                    <input type="file" name="banner" class="form-control" id="bannner">
+                                    @error('banner')
+                                        <small class="text-danger"> {{ $message }}</small>
+                                    @enderror
                                 </div>
-                            </div><!--end col-->
+                            </div>
+
                             <div class="col-6">
                                 <div class="mb-3">
-                                    <label for="lastNameinput" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter your lastname"
-                                        id="lastNameinput">
+                                    <label for="banner" class="form-label">Event Rules</label>
+                                    <input type="file" name="rules" class="form-control" id="bannner">
+                                    @error('rules')
+                                        <small class="text-danger"> {{ $message }}</small>
+                                    @enderror
                                 </div>
-                            </div><!--end col-->
-                            <div class="col-12">
+                            </div>
+
+                            <div class="col-4">
                                 <div class="mb-3">
-                                    <label for="compnayNameinput" class="form-label">Company Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter company name"
-                                        id="compnayNameinput">
+                                    <label for="banner" class="form-label">Cause / Beneficiary</label>
+                                    <textarea name="cause" class="form-control">{{ old('cause') }}</textarea>
+                                    @error('cause')
+                                        <small class="text-danger"> {{ $message }}</small>
+                                    @enderror
                                 </div>
-                            </div><!--end col-->
-                            <div class="col-6">
+                            </div>
+
+                            <div class="col-8">
                                 <div class="mb-3">
-                                    <label for="phonenumberInput" class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" placeholder="+(245) 451 45123"
-                                        id="phonenumberInput">
+                                    <label for="banner" class="form-label">Description</label>
+                                    <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                                    @error('description')
+                                        <small class="text-danger"> {{ $message }}</small>
+                                    @enderror
                                 </div>
-                            </div><!--end col-->
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="emailidInput" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" placeholder="example@gamil.com"
-                                        id="emailidInput">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label for="address1ControlTextarea" class="form-label">Address</label>
-                                    <input type="text" class="form-control" placeholder="Address 1"
-                                        id="address1ControlTextarea">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="citynameInput" class="form-label">City</label>
-                                    <input type="email" class="form-control" placeholder="Enter your city"
-                                        id="citynameInput">
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="ForminputState" class="form-label">State</label>
-                                    <select id="ForminputState" class="form-select">
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                            </div><!--end col-->
+                            </div>
+
                             <div class="col-lg-12">
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                <div class="text-start">
+                                    <button type="submit" class="btn btn-primary">Save</button>&nbsp;&nbsp;
+                                    <button type="submit" class="btn btn-info">Save & Publish</button>
                                 </div>
+
+
+
                             </div><!--end col-->
                         </div><!--end row-->
                     </form>
