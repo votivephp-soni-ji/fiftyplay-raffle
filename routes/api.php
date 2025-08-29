@@ -1,29 +1,30 @@
 <?php
 
+use App\Http\Controllers\api\FirebaseAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\SocialAuthController;
-use App\Http\Controllers\OtpController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\EventController;
+use App\Http\Controllers\api\ProfileController;
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-    // OTP
-    // Route::post('otp/send', [OtpController::class, 'send']);
-    // Route::post('otp/verify', [OtpController::class, 'verify']);
-
-    // Social (token-based from client)
-    // Route::post('social/{provider}/token', [SocialAuthController::class, 'loginWithToken'])
-    //     ->whereIn('provider', ['google', 'facebook', 'apple']);
+    Route::post('firebase-login', [FirebaseAuthController::class, 'login']);
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('me', [ProfileController::class, 'me']);
+    Route::post('/register-device-token', [ProfileController::class, 'registerDevice']);
     Route::put('profile', [ProfileController::class, 'update']);
     Route::post('profile/avatar', [ProfileController::class, 'uploadAvatar']);
+
+    Route::prefix('event')->group(function () {
+        Route::post("/create", [EventController::class, 'create']);
+        Route::post('/{event}/pause', [EventController::class, 'pause']);
+        Route::post('/{event}/resume', [EventController::class, 'resume']);
+    });
 });

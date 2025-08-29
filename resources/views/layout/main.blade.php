@@ -30,6 +30,10 @@
     <!-- custom Css-->
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"
+        integrity="sha512-gOQQLjHRpD3/SEOtalVq50iDn4opLVup2TF8c4QPI3/NmUPNZOk2FG0ihi8oCU/qYEsw4P6nuEZT2lAG0UNYaw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     @stack('styles')
 
 </head>
@@ -1735,8 +1739,22 @@
     <script src="{{ asset('assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
+        integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     @stack('scripts')
+
+    <script>
+        @if (session('success'))
+            toastr.success(session('success'))
+        @elseif (session('warning'))
+            toastr.warning(session('warning'))
+        @elseif (session('error'))
+            toastr.danger(session('error'))
+        @endif
+    </script>
 </body>
 
 </html>

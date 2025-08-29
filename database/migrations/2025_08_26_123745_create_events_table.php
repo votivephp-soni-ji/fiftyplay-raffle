@@ -19,12 +19,11 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->dateTime('draw_time')->nullable();
-            $table->string('cause')->nullable(); // beneficiary/cause
-            $table->string('banner')->nullable(); // event banner
+            $table->string('cause')->nullable();
             $table->string('rules')->nullable(); // upload pdf or text
             $table->integer('max_tickets_per_user')->default(1);
             $table->boolean('is_publish')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->enum('status', ['active', 'paused', 'inactive'])->default('active');
             $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });

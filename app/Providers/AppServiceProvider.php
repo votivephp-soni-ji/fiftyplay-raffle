@@ -19,6 +19,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (!defined('EVENT_ORGANIZER')) {
+            define('EVENT_ORGANIZER', 2);
+        }
+        if (!defined('FINANCE_MANAGER')) {
+            define('FINANCE_MANAGER', 3);
+        }
+        if (!defined('BUYERS')) {
+            define('BUYER', 4);
+        }
     }
 }

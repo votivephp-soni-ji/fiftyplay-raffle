@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use App\Models\UserDevice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,9 +16,20 @@ class AuthController extends Controller
     {
         $user = User::create([
             'name'     => $request->name,
-            'email'    => $request->email,
+            'email'    => strtolower($request->email),
             'password' => $request->password,
+            'user_type' => EVENT_ORGANIZER,
         ]);
+
+        if ($request->device_token && $request->platform) {
+            UserDevice::create([
+                'user_id' => $user->id,
+                'device_token' => $request->device_token,
+                'platform' => $request->platform
+            ]);
+        }
+
+
 
         return response()->json([
             'message' => 'User registered successfully',
@@ -32,8 +45,8 @@ class AuthController extends Controller
             ->when(isset($cred['phone']), fn($q) => $q->where('phone', $cred['phone']))
             ->first();
 
-        if (!$user || Hash::check($cred['password'], $user->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 422);
+        if (!$user || (!Hash::check($cred['password'], $user->password))) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
         $token = $user->createToken('api')->plainTextToken;

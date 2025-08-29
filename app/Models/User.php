@@ -20,6 +20,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'user_type',
         'name',
         'email',
         'password',
@@ -60,5 +61,10 @@ class User extends Authenticatable
     public function google2faSecret()
     {
         return $this->attributes['google2fa_secret'];
+    }
+
+    public function devices()
+    {
+        return $this->hasMany(UserDevice::class);
     }
 }

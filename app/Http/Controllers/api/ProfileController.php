@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\DeviceTokenRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -10,6 +13,17 @@ class ProfileController extends Controller
     public function me(Request $request)
     {
         return response()->json(['data' => ['user' => $request->user()]]);
+    }
+
+    public function registerDevice(DeviceTokenRequest $request)
+    {
+
+        auth()->user()->devices()->updateOrCreate(
+            ['device_token' => $request->device_token],
+            ['platform' => $request->platform]
+        );
+
+        return response()->json(['success' => true]);
     }
 
     public function update(UpdateProfileRequest $request)

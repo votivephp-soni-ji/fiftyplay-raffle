@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->tinyInteger('user_type')->comment("1=Admin,2=event-organizer,3=finance-manager,4=end-user");
             $table->string('name')->nullable();
             $table->string('email')->unique()->nullable(); // citext for case-insensitive
             $table->timestamp('email_verified_at')->nullable();
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->boolean('is_age_verified')->default(false);
             $table->string('avatar_url')->nullable();
             $table->boolean('is_mfa_enabled')->default(false);
+            $table->string('preferred_language', 10)->default('en');
             $table->jsonb('notification_settings')->nullable(); // e.g. {"email":true,"sms":false,"push":true}
             $table->rememberToken();
             $table->timestamps();

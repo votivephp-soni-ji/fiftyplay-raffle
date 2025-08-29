@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'title',
         'description',
@@ -18,10 +21,16 @@ class Event extends Model
         'rules',
         'max_tickets_per_user',
         'created_by',
+        'status'
     ];
 
     public function organizer()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function banners()
+    {
+        return $this->hasMany(EventBanner::class);
     }
 }

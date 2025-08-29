@@ -19,8 +19,9 @@ class AdminSeeder extends Seeder
 
         // Create default admin user
         $admin = User::firstOrCreate(
-            ['email' => 'admin@yopmail.com'], // change this email
+            ['email' => 'fifty.play@yopmail.com'], // change this email
             [
+                'user_type' => 1,
                 'name' => 'Super Admin',
                 'password' => "123456", // change password
                 'email_verified_at' => now(),
